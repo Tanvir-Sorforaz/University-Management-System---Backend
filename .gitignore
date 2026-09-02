@@ -1,0 +1,10 @@
+node_modules
+.agents
+.claude*
+.windsurf
+
+
+/generated/prisma
+.env
+
+.gitattributes
