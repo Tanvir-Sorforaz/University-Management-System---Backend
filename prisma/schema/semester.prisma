@@ -1,0 +1,18 @@
+model Semester {
+  id         String         @id @default(cuid())
+  name       String         // e.g. "Fall"
+  year       Int
+  startDate  DateTime
+  endDate    DateTime
+  status     SemesterStatus @default(UPCOMING)
+
+  sections   Section[]
+  fees       Fee[]
+
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+  deletedAt  DateTime?
+
+  @@unique([year, name])
+  @@map("semesters")
+}

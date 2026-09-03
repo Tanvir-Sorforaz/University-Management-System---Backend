@@ -1,0 +1,12 @@
+model CoursePrerequisite {
+  id                    String  @id @default(cuid())
+
+  courseId              String
+  course                Course  @relation("CourseRequires", fields: [courseId], references: [id])
+
+  prerequisiteCourseId  String
+  prerequisiteCourse    Course  @relation("RequiredByCourse", fields: [prerequisiteCourseId], references: [id])
+
+  @@unique([courseId, prerequisiteCourseId])
+  @@map("course_prerequisites")
+}

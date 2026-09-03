@@ -1,0 +1,14 @@
+model Transcript {
+  id                  String         @id @default(cuid())
+
+  studentId           String         @unique
+  student             StudentProfile @relation(fields: [studentId], references: [id])
+
+  cgpa                Float          @default(0)
+  totalCreditsEarned  Float          @default(0)
+
+  updatedAt           DateTime       @updatedAt
+  createdAt           DateTime       @default(now())
+
+  @@map("transcripts")
+}

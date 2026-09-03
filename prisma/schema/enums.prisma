@@ -1,0 +1,72 @@
+enum Role {
+  STUDENT
+  FACULTY
+  ADMIN
+}
+
+enum AdminType {
+  SUPER
+  REGISTRAR
+  FINANCE
+  DEPARTMENT
+}
+
+enum SemesterStatus {
+  UPCOMING
+  ACTIVE
+  COMPLETED
+}
+
+enum EnrollmentStatus {
+  ENROLLED
+  DROPPED
+  COMPLETED
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  LATE
+  EXCUSED
+}
+
+enum ExamType {
+  QUIZ
+  ASSIGNMENT
+  MIDTERM
+  FINAL
+}
+
+enum Grade {
+  A_PLUS
+  A
+  A_MINUS
+  B_PLUS
+  B
+  B_MINUS
+  C_PLUS
+  C
+  D
+  F
+}
+
+enum PaymentMethod {
+  SSLCOMMERZ
+  STRIPE
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+  CANCELLED
+}
+
+enum NotificationType {
+  ENROLLMENT
+  ATTENDANCE
+  RESULT
+  PAYMENT
+  ANNOUNCEMENT
+  GENERAL
+}

@@ -1,0 +1,19 @@
+model Attendance {
+  id          String            @id @default(cuid())
+
+  sectionId   String
+  section     Section           @relation(fields: [sectionId], references: [id])
+
+  studentId   String
+  student     StudentProfile    @relation(fields: [studentId], references: [id])
+
+  date        DateTime
+  status      AttendanceStatus
+
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  @@unique([sectionId, studentId, date])
+  @@index([studentId])
+  @@map("attendances")
+}

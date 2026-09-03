@@ -1,0 +1,17 @@
+model AuditLog {
+  id            String   @id @default(cuid())
+
+  performedById String
+  performedBy   User     @relation("PerformedBy", fields: [performedById], references: [id])
+
+  action        String   // e.g. "UPDATE_RESULT", "CHANGE_ROLE", "REFUND_PAYMENT"
+  entity        String   // e.g. "ExamResult", "User", "Payment"
+  entityId      String
+  changes       Json?
+
+  createdAt     DateTime @default(now())
+
+  @@index([entity, entityId])
+  @@index([performedById])
+  @@map("audit_logs")
+}
