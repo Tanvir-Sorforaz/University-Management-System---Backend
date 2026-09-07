@@ -4,18 +4,17 @@ model Enrollment {
   studentId   String
   student     StudentProfile   @relation(fields: [studentId], references: [id])
 
-  sectionId   String
-  section     Section          @relation(fields: [sectionId], references: [id])
+  semesterId  String
+  semester    Semester         @relation(fields: [semesterId], references: [id])
 
   status      EnrollmentStatus @default(ENROLLED)
   enrolledAt  DateTime         @default(now())
-  droppedAt   DateTime?
 
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
 
-  @@unique([studentId, sectionId])
-  @@index([sectionId])
+  @@unique([studentId, semesterId])
+  @@index([semesterId])
   @@index([studentId])
   @@map("enrollments")
 }

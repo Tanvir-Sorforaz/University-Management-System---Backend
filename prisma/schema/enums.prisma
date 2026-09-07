@@ -5,21 +5,20 @@ enum Role {
 }
 
 enum AdminType {
-  SUPER
+  VC
   REGISTRAR
   FINANCE
-  DEPARTMENT
+  SUPER
 }
 
-enum SemesterStatus {
-  UPCOMING
-  ACTIVE
-  COMPLETED
+enum Department {
+  CSE
+  EEE
+  CIVIL
 }
 
 enum EnrollmentStatus {
   ENROLLED
-  DROPPED
   COMPLETED
 }
 

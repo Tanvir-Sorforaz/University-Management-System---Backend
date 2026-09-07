@@ -1,21 +1,26 @@
 model FacultyProfile {
-  id            String     @id @default(cuid())
-  userId        String     @unique
-  user          User       @relation(fields: [userId], references: [id])
+  id                String     @id @default(cuid())
+  userId            String     @unique
+  user              User       @relation(fields: [userId], references: [id])
 
-  facultyId     String     @unique
-  departmentId  String
-  department    Department @relation(fields: [departmentId], references: [id])
-  designation   String?
-  phone         String?
-  avatarUrl     String?
+  facultyId         String     @unique
+  department        Department
+  // Exactly one FacultyProfile per department should have this set true —
+  // enforced in admin.service.ts (assignDepartmentHead), not at the DB level.
+  isDepartmentHead  Boolean    @default(false)
+  designation       String?
+  phone             String?
+  avatarUrl         String?
 
-  sections      Section[]
+  createdExams        Exam[]       @relation("ExamCreatedBy")
+  markedAttendances   Attendance[] @relation("AttendanceMarkedBy")
 
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
-  deletedAt     DateTime?
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+  deletedAt         DateTime?
 
-  @@index([departmentId])
+  @@index([department])
+  @@index([department, isDepartmentHead])
   @@map("faculty_profiles")
 }
+

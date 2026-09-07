@@ -1,3 +1,5 @@
+//transcript is a record of a student's academic performance, including their grades, courses taken, and other relevant information. It serves as an official document that provides a comprehensive overview of a student's educational achievements and progress throughout their academic journey.
+
 model Transcript {
   id                  String         @id @default(cuid())
 
