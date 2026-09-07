@@ -1,18 +1,20 @@
 model Semester {
-  id         String         @id @default(cuid())
-  name       String         // e.g. "Fall"
-  year       Int
-  startDate  DateTime
-  endDate    DateTime
-  status     SemesterStatus @default(UPCOMING)
+  id              String   @id @default(cuid())
+  department      Department
+  semesterNumber  Int      // 1 through 8
+  name            String?  // optional label, e.g. "3rd Semester"
+  feeAmount       Float    // BDT amount required to enter this semester
 
-  sections   Section[]
-  fees       Fee[]
+  enrollments     Enrollment[]
+  attendances     Attendance[]
+  exams           Exam[]
+  fees            Fee[]
 
-  createdAt  DateTime       @default(now())
-  updatedAt  DateTime       @updatedAt
-  deletedAt  DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  deletedAt       DateTime?
 
-  @@unique([year, name])
+  @@unique([department, semesterNumber])
+  @@index([department])
   @@map("semesters")
 }

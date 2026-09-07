@@ -1,14 +1,17 @@
 model Exam {
   id             String       @id @default(cuid())
 
-  sectionId      String
-  section        Section      @relation(fields: [sectionId], references: [id])
+  semesterId     String
+  semester       Semester     @relation(fields: [semesterId], references: [id])
 
   title          String
   type           ExamType
   examDate       DateTime
   totalMarks     Float
-  weightPercent  Float        // contribution to final grade
+  weightPercent  Float        // contribution to the semester's final grade
+
+  createdById    String?
+  createdBy      FacultyProfile? @relation("ExamCreatedBy", fields: [createdById], references: [id])
 
   results        ExamResult[]
 
@@ -16,6 +19,6 @@ model Exam {
   updatedAt      DateTime     @updatedAt
   deletedAt      DateTime?
 
-  @@index([sectionId])
+  @@index([semesterId])
   @@map("exams")
 }
