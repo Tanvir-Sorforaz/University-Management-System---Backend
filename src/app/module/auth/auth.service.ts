@@ -5,13 +5,21 @@ import { Role } from "../../../../generated/prisma/enums";
 import config from "../../config";
 import { AppError } from "../../utils/AppError";
 import { jwtUtils } from "../../utils/jwt";
-import type { ILoginPayload, IRegisterStudentPayload } from "./auth.interface";
+import type { ILoginPayload, IRegisterStudentPayload, IverifyEmailPayload } from "./auth.interface";
 import { Prisma } from "../../../../generated/prisma/client";
 import { prisma } from "../../lib/prisma"; //capital prisma is the generated client, lowercase prisma is the instance of the client
+import { redisClient } from "../../lib/redis";
+import ejs from "ejs";
+import path from "path";
+import { transporter } from "../../lib/nodemailer";
+import crypto from "node:crypto";
 
 
 /** Placeholder generator — swap for a real roll-number scheme. */
 const generateStudentId = () => `STU-${Date.now().toString(36).toUpperCase()}`;
+const OTP_EXPIRATION_SECOND =5*60; 
+const otpKeyFor=(email: string)=>`studen-registration-otp:${email}`;
+const pendingDataKeyFor =(email:string)=>`student-registration-data${email}`;
 
 
 
@@ -31,9 +39,12 @@ const issueTokens = (jwtPayload: JwtPayload) => {
   return { accessToken, refreshToken };
 };
 
-
-
-
+/*
+registration. Does NOT create a User row — it hashes the
+password, stashes the whole payload in Redis under the email (5 minute
+TTL), generates a 6-digit OTP (also 5 minute TTL), and emails it.
+The actual account is created in verifyStudentEmail below
+*/
 
 const registerStudent = async (payload: IRegisterStudentPayload) => {
   const email = payload.email.trim().toLowerCase();
@@ -61,24 +72,91 @@ const registerStudent = async (payload: IRegisterStudentPayload) => {
     Number(config.bcrypt_salt_rounds) || 10
   );
 
-  const user = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
+  const otp = crypto.randomInt(100000, 1000000).toString();
+
+  await redisClient.set(otpKeyFor(email), otp, {
+    expiration: { type: "EX", value: OTP_EXPIRATION_SECOND },
+  });
+
+  const pendingPayload = {
+    ...payload,
+    email,
+    password: hashedPassword, // never store the plaintext password, even temporarily
+  };
+
+  await redisClient.set(
+    pendingDataKeyFor(email),
+    JSON.stringify(pendingPayload),
+    { expiration: { type: "EX", value: OTP_EXPIRATION_SECOND } }
+  );
+  const templatePath = path.join(
+    process.cwd(),
+    "src/app/templates/registration-otp.ejs"
+  );
+
+  const html = await ejs.renderFile(templatePath, {
+    name: payload.name,
+    email: payload.email,
+    otp,
+    expirationMinutes: OTP_EXPIRATION_SECOND / 60,
+
+  });
+
+  await transporter.sendMail({
+    from: config.email_sender,
+    to: email,
+    subject: "Verify your email — University Management System",
+    html,
+  });
+};
+
+
+
+const verifyStudentEmail=async(payload:IverifyEmailPayload)=>{
+  const email=payload.email.trim().toLowerCase();
+  const isUserExist=await prisma.user.findUnique({where:{email}});
+
+  if (isUserExist){
+
+    throw new AppError(httpStatus.CONFLICT,"This email is already verified and registerd");
+  }
+  const redisOtp =await redisClient.get(otpKeyFor(email));
+  if(!redisOtp){
+    throw new AppError(httpStatus.BAD_REQUEST,"otp has expired ,please register again");
+  }
+  if(redisOtp !==payload.otp){
+    throw new AppError(httpStatus.BAD_REQUEST,"Ivalid OTP");
+  }
+  const redisPendingData = await redisClient.get(pendingDataKeyFor(email));
+  if (!redisPendingData) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      "Registration data has expired. Please register again."
+    );
+  }
+  const pendingPayload:IRegisterStudentPayload  & {password:string}=JSON.parse(redisPendingData);
+
+  const user=await prisma.$transaction(async(tx:Prisma.TransactionClient)=>{
     const createdUser = await tx.user.create({
       data: {
         email,
-        name: payload.name,
-        password: hashedPassword,
+        name: pendingPayload.name,
+        password: pendingPayload.password, // already hashed at registration time
         role: Role.STUDENT,
+        emailVerified: true,
       },
     });
 
-    const createdStudentProfile=await tx.studentProfile.create({
+    const createdStudentProfile = await tx.studentProfile.create({
       data: {
         userId: createdUser.id,
-        studentId: payload.studentId ?? generateStudentId(),
-        department: payload.departmentName,
-        phone: payload.phone,
-        address: payload.address,
-        dateOfBirth: payload.dateOfBirth ? new Date(payload.dateOfBirth) : undefined,
+        studentId: pendingPayload.studentId ?? generateStudentId(),
+        department: pendingPayload.departmentName,
+        phone: pendingPayload.phone,
+        address: pendingPayload.address,
+        dateOfBirth: pendingPayload.dateOfBirth
+          ? new Date(pendingPayload.dateOfBirth)
+          : undefined,
       },
     });
 
@@ -87,6 +165,18 @@ const registerStudent = async (payload: IRegisterStudentPayload) => {
     });
 
     return createdUser;
+  });
+  await redisClient.del(otpKeyFor(email));
+  await redisClient.del(pendingDataKeyFor(email));
+
+  const templatePath = path.join(process.cwd(), "src/app/templates/welcome-email.ejs");
+  const html = await ejs.renderFile(templatePath, { name: user.name });
+
+  await transporter.sendMail({
+    from: config.email_sender,
+    to: email,
+    subject: "Welcome to the University Management System",
+    html,
   });
 
   const jwtPayload = { userId: user.id, name: user.name, role: user.role };
@@ -97,7 +187,8 @@ const registerStudent = async (payload: IRegisterStudentPayload) => {
     accessToken,
     refreshToken,
   };
-};
+
+}
 
 
 
@@ -181,6 +272,7 @@ const refreshToken = async (token: string) => {
 
 export const AuthService = {
   registerStudent,
+  verifyStudentEmail,
   loginUser,
   getMe,
   refreshToken,

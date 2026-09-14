@@ -38,7 +38,21 @@ const setAuthCookies = (
 
 
 const registerStudent = catchAsync(async (req: Request, res: Response) => {
-  const result = await AuthService.registerStudent(req.body);
+
+  await AuthService.registerStudent(req.body);
+
+  sendResponse(res, {
+    statusCode: httpStatus.CREATED,
+    success: true,
+    message: "Verification OTP sent to your email",
+    data: null,
+  });
+});
+
+
+
+const verifyEmail = catchAsync(async(req:Request,res:Response)=>{
+  const result =await AuthService.verifyStudentEmail(req.body);
   const { accessToken, refreshToken, user } = result;
 
   setAuthCookies(res, accessToken, refreshToken);
@@ -46,10 +60,10 @@ const registerStudent = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
     success: true,
-    message: "Account registered successfully",
+    message: "Email verified successfully",
     data: { user, accessToken, refreshToken },
   });
-});
+})
 
 
 
@@ -131,6 +145,7 @@ const logout = catchAsync(async (_req: Request, res: Response) => {
 
 export const AuthController = {
   registerStudent,
+  verifyEmail,
   loginUser,
   getMe,
   refreshToken,
