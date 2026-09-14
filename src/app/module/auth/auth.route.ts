@@ -15,6 +15,13 @@ router.post(
 );
 
 router.post(
+  "/verify-email",
+  validateRequest(AuthValidation.VerifyEmailZodSchema),
+  AuthController.verifyEmail
+
+)
+
+router.post(
   "/login",
   validateRequest(AuthValidation.LoginZodSchema),
   AuthController.loginUser

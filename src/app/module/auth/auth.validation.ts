@@ -19,6 +19,11 @@ const RegisterStudentZodSchema = z.object({
   dateOfBirth: z.string().optional(),
 });
 
+const VerifyEmailZodSchema = z.object({
+  email: z.email("Invalid email address"),
+  otp: z.string().length(6, "OTP must be 6 digits"),
+});
+
 const LoginZodSchema = z.object({
   email: z.email("Invalid email address"),
   password: z.string().min(1, "Password is required"),
@@ -26,5 +31,6 @@ const LoginZodSchema = z.object({
 
 export const AuthValidation = {
   RegisterStudentZodSchema,
+  VerifyEmailZodSchema,
   LoginZodSchema,
 };
