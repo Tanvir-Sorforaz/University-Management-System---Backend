@@ -3,8 +3,8 @@
 model AuditLog {
   id            String   @id @default(cuid())
 
-  performedById String
-  performedBy   User     @relation("PerformedBy", fields: [performedById], references: [id])
+  performedById String?
+  performedBy   User?    @relation("PerformedBy", fields: [performedById], references: [id], onDelete: SetNull)
 
   action        String   // e.g. "UPDATE_RESULT", "ASSIGN_DEPARTMENT_HEAD", "REFUND_PAYMENT"
   entity        String   // e.g. "ExamResult", "FacultyProfile", "Payment"

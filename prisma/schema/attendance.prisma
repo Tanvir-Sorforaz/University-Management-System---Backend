@@ -5,7 +5,7 @@ model Attendance {
   semester      Semester          @relation(fields: [semesterId], references: [id])
 
   studentId     String
-  student       StudentProfile    @relation(fields: [studentId], references: [id])
+  student       StudentProfile    @relation(fields: [studentId], references: [id], onDelete: Cascade)
 
   date          DateTime
   status        AttendanceStatus

@@ -179,7 +179,7 @@ const verifyStudentEmail=async(payload:IverifyEmailPayload)=>{
     html,
   });
 
-  const jwtPayload = { userId: user.id, name: user.name, role: user.role };
+  const jwtPayload = { userId: user.id,email: user.email, name: user.name, role: user.role };
   const { accessToken, refreshToken } = issueTokens(jwtPayload);
 
   return {
@@ -214,7 +214,7 @@ const loginUser = async (payload: ILoginPayload) => {
     throw new AppError(httpStatus.UNAUTHORIZED, "Invalid email or password");
   }
 
-  const jwtPayload = { userId: user.id, name: user.name, role: user.role };
+  const jwtPayload = { userId: user.id,email: user.email, name: user.name, role: user.role };
   const { accessToken, refreshToken } = issueTokens(jwtPayload);
 
   return {
@@ -264,7 +264,7 @@ const refreshToken = async (token: string) => {
   }
 
   // Rotate both tokens on every refresh.
-  return issueTokens({ userId: user.id, name: user.name, role: user.role });
+  return issueTokens({ userId: user.id,email: user.email, name: user.name, role: user.role });
 };
 
 

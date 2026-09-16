@@ -5,7 +5,7 @@ model ExamResult {
   exam           Exam            @relation(fields: [examId], references: [id])
 
   studentId      String
-  student        StudentProfile  @relation(fields: [studentId], references: [id])
+  student        StudentProfile  @relation(fields: [studentId], references: [id], onDelete: Cascade)
 
   marksObtained  Float
   grade          Grade?

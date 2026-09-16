@@ -11,6 +11,7 @@ import { jwtUtils } from "../utils/jwt";
 export interface RequestUser {
   userId: string;
   email: string;
+  name: string;
   role: Role;
 }
 
@@ -72,7 +73,8 @@ export const auth = (...requiredRoles: Role[]) => {
     req.user = {
       userId: user.id,
       email: user.email,
-      role: user.role,
+      name: user.name,
+      role: user.role
     };
 
     next();
