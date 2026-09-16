@@ -2,10 +2,10 @@ model Payment {
   id               String        @id @default(cuid())
 
   feeId            String
-  fee              Fee           @relation(fields: [feeId], references: [id])
+  fee              Fee           @relation(fields: [feeId], references: [id], onDelete: Cascade)
 
   studentId        String
-  student          StudentProfile @relation(fields: [studentId], references: [id])
+  student          StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
 
   amount           Float
   method           PaymentMethod
