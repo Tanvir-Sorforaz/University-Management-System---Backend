@@ -9,7 +9,7 @@ model Fee {
 
   amount      Float
   currency    String         @default("BDT")
-  dueDate     DateTime
+  dueDate     DateTime       @default(now())
   isPaid      Boolean        @default(false)
 
   payments    Payment[]

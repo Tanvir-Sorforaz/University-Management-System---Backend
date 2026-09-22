@@ -3,9 +3,9 @@ import app from "./app";
 import config from "./app/config";
 import { prisma } from "./app/lib/prisma";
 import { redisClient } from "./app/lib/redis";
-import nodemailer from "nodemailer";
+// import nodemailer from "nodemailer";
 import { transporter } from "./app/lib/nodemailer";
-// import { redisClient } from "./app/lib/redis";
+import { seedDatabase } from "./app/utils/seedDatabase";
 
 const PORT = config.port;
 
@@ -19,8 +19,13 @@ const main = async () => {
      await transporter.verify();
      console.log("Nodemailer connected successfully");
 
-    // await redisClient.connect();
-    // console.log("Redis connected successfully.");
+    
+
+    try {
+      await seedDatabase();
+    } catch (error) {
+      console.error("Database seeding failed (server will still start):", error);
+    }
 
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
@@ -31,5 +36,7 @@ const main = async () => {
     process.exit(1);
   }
 };
+
+
 
 main();

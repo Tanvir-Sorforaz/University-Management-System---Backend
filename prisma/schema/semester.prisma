@@ -4,6 +4,7 @@ model Semester {
   semesterNumber  Int      // 1 through 8
   name            String?  // optional label, e.g. "3rd Semester"
   feeAmount       Float    // BDT amount required to enter this semester
+  creditHours     Int      @default(15) // total credit hours for the whole semester — used for CGPA weighting
 
   enrollments     Enrollment[]
   attendances     Attendance[]
