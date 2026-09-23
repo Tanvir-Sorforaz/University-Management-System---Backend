@@ -1,9 +1,0 @@
-import { Router } from "express";
-import { Role } from "../../../../generated/prisma/enums.js";
-import { auth } from "../../middleware/checkAuth.js";
-import { TranscriptController } from "./transcript.controller.js";
-const router = Router();
-router.get("/my", auth(Role.STUDENT), TranscriptController.getMyTranscript);
-router.get("/:studentId", auth(Role.ADMIN, Role.FACULTY), TranscriptController.getTranscriptByStudentId);
-export const TranscriptRoutes = router;
-//# sourceMappingURL=transcript.route.js.map

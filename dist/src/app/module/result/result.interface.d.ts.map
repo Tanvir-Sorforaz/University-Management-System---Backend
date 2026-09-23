@@ -1,1 +1,0 @@
-{"version":3,"file":"result.interface.d.ts","sourceRoot":"","sources":["../../../../../src/app/module/result/result.interface.ts"],"names":[],"mappings":"AAAA,MAAM,WAAW,oBAAoB;IACnC,MAAM,EAAE,MAAM,CAAC;IACf,SAAS,EAAE,MAAM,CAAC;IAClB,aAAa,EAAE,MAAM,CAAC;IACtB,OAAO,CAAC,EAAE,MAAM,CAAC;CAClB;AAED,MAAM,WAAW,oBAAoB;IACnC,aAAa,CAAC,EAAE,MAAM,CAAC;IACvB,OAAO,CAAC,EAAE,MAAM,CAAC;CAClB"}
