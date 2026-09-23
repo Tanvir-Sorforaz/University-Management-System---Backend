@@ -1,11 +1,12 @@
-import { prisma } from "../lib/prisma";
+import type { Prisma } from "../../../generated/prisma/client.js";
+import { prisma } from "../lib/prisma.js";
 
 interface IAuditLogInput {
   performedById: string;
   action: string;
   entity: string;
   entityId: string;
-  changes?: Record<string, unknown>;
+  changes?: Prisma.InputJsonValue;
 }
 
 /**

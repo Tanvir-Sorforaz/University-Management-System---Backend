@@ -1,4 +1,4 @@
-import type { NotificationType } from "../../../../generated/prisma/enums";
+import type { NotificationType } from "../../../../generated/prisma/enums.js";
 
 export interface ICreateNotificationInput {
   userId: string;

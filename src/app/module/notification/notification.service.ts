@@ -1,9 +1,9 @@
 import httpStatus from "http-status";
-import { prisma } from "../../lib/prisma";
-import { AppError } from "../../utils/AppError";
-import { buildMeta, parseQuery } from "../../utils/pagination";
-import type { IQuery } from "../../interfaces";
-import type { ICreateNotificationInput } from "./notification.interface";
+import { prisma } from "../../lib/prisma.js";
+import { AppError } from "../../utils/AppError.js";
+import { buildMeta, parseQuery } from "../../utils/pagination.js";
+import type { IQuery } from "../../interfaces/index.js";
+import type { ICreateNotificationInput } from "./notification.interface.js";
 
 /**
  * Called from other services (payment, result, enrollment) right after a

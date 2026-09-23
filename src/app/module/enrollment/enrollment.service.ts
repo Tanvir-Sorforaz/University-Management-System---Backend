@@ -2,11 +2,11 @@ import httpStatus from "http-status";
 import {
   EnrollmentStatus,
   NotificationType,
-} from "../../../../generated/prisma/enums";
-import { prisma } from "../../lib/prisma";
-import { AppError } from "../../utils/AppError";
-import { createNotification } from "../notification/notification.service";
-import type { ICreateEnrollmentPayload } from "./enrollment.interface";
+} from "../../../../generated/prisma/enums.js";
+import { prisma } from "../../lib/prisma.js";
+import { AppError } from "../../utils/AppError.js";
+import { createNotification } from "../notification/notification.service.js";
+import type { ICreateEnrollmentPayload } from "./enrollment.interface.js";
 
 /**
  * Business rule that can't be a DB constraint: a student may only enroll

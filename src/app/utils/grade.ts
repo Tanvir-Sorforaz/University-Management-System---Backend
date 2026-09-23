@@ -1,4 +1,4 @@
-import { Grade } from "../../../generated/prisma/enums";
+import { Grade } from "../../../generated/prisma/enums.js";
 
 /** Grade point scale (4.0 scale). Adjust to match your institution's policy. */
 export const GRADE_POINTS: Record<Grade, number> = {

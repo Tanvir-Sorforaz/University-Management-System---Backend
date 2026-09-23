@@ -1,9 +1,9 @@
 import type { Request, Response } from "express";
 import httpStatus from "http-status";
-import { AppError } from "../../utils/AppError";
-import { catchAsync } from "../../utils/catchAsync";
-import { sendResponse } from "../../utils/sendResponse";
-import { AttendanceService } from "./attendance.service";
+import { AppError } from "../../utils/AppError.js";
+import { catchAsync } from "../../utils/catchAsync.js";
+import { sendResponse } from "../../utils/sendResponse.js";
+import { AttendanceService } from "./attendance.service.js";
 
 const markAttendance = catchAsync(async (req: Request, res: Response) => {
   if (!req.user) {
@@ -36,7 +36,12 @@ const getMyAttendance = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getAttendanceById = catchAsync(async (req: Request, res: Response) => {
-  const result = await AttendanceService.getAttendanceById(req.params.id);
+  const { id } = req.params;
+  if (typeof id !== "string") {
+    throw new AppError(httpStatus.BAD_REQUEST, "Attendance ID is required");
+  }
+
+  const result = await AttendanceService.getAttendanceById(id);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

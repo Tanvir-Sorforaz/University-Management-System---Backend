@@ -1,12 +1,12 @@
 import httpStatus from "http-status";
-import { NotificationType } from "../../../../generated/prisma/enums";
-import { prisma } from "../../lib/prisma";
-import { AppError } from "../../utils/AppError";
-import { recordAuditLog } from "../../utils/auditLog";
-import { marksToGrade } from "../../utils/grade";
-import { createNotification } from "../notification/notification.service";
-import { TranscriptService } from "../transcript/transcript.service";
-import type { ICreateResultPayload, IUpdateResultPayload } from "./result.interface";
+import { NotificationType } from "../../../../generated/prisma/enums.js";
+import { prisma } from "../../lib/prisma.js";
+import { AppError } from "../../utils/AppError.js";
+import { recordAuditLog } from "../../utils/auditLog.js";
+import { marksToGrade } from "../../utils/grade.js";
+import { createNotification } from "../notification/notification.service.js";
+import { TranscriptService } from "../transcript/transcript.service.js";
+import type { ICreateResultPayload, IUpdateResultPayload } from "./result.interface.js";
 
 /**
  * Faculty enters a mark. Upserts on the (examId, studentId) unique

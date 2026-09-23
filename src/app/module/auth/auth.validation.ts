@@ -1,5 +1,5 @@
 import z from "zod";
-import { Department } from "../../../../generated/prisma/enums";
+import { Department } from "../../../../generated/prisma/enums.js";
 
 const RegisterStudentZodSchema = z.object({
   email: z.email("Invalid email address"),

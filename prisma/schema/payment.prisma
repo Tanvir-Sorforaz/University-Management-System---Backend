@@ -10,7 +10,8 @@ model Payment {
   amount           Float
   method           PaymentMethod
   status           PaymentStatus @default(PENDING)
-  transactionId    String?       @unique
+  gatewayPaymentId String?       @unique // bKash's paymentID — set at create, needed to call execute later
+  transactionId    String?       @unique // bKash's trxID — only set once execute succeeds
   gatewayResponse  Json?
   paidAt           DateTime?
 

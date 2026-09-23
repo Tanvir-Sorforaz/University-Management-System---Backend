@@ -1,4 +1,4 @@
-import type { AdminType, Department } from "../../../../generated/prisma/enums";
+import type { AdminType, Department } from "../../../../generated/prisma/enums.js";
 
 /**
  * Creates a new FACULTY account. Can optionally be marked as the

@@ -1,5 +1,5 @@
 import z from "zod";
-import { AttendanceStatus } from "../../../../generated/prisma/enums";
+import { AttendanceStatus } from "../../../../generated/prisma/enums.js";
 
 const MarkAttendanceZodSchema = z.object({
   semesterId: z.string().min(1, "semesterId is required"),

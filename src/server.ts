@@ -1,11 +1,11 @@
-import "dotenv/config";
-import app from "./app";
-import config from "./app/config";
-import { prisma } from "./app/lib/prisma";
-import { redisClient } from "./app/lib/redis";
+import "dotenv/config.js";
+import app from "./app.js";
+import config from "./app/config/index.js";
+import { prisma } from "./app/lib/prisma.js";
+import { redisClient } from "./app/lib/redis.js";
 // import nodemailer from "nodemailer";
-import { transporter } from "./app/lib/nodemailer";
-import { seedDatabase } from "./app/utils/seedDatabase";
+import { transporter } from "./app/lib/nodemailer.js";
+import { seedDatabase } from "./app/utils/seedDatabase.js";
 
 const PORT = config.port;
 

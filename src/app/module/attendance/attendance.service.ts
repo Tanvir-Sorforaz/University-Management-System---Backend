@@ -1,7 +1,7 @@
 import httpStatus from "http-status";
-import { prisma } from "../../lib/prisma";
-import { AppError } from "../../utils/AppError";
-import type { IMarkAttendancePayload } from "./attendance.interface";
+import { prisma } from "../../lib/prisma.js";
+import { AppError } from "../../utils/AppError.js";
+import type { IMarkAttendancePayload } from "./attendance.interface.js";
 
 /**
  * Marks (or corrects, same day) one student's attendance. Uses upsert on

@@ -4,19 +4,19 @@ import {
   AdminType,
   PaymentStatus,
   Role,
-} from "../../../../generated/prisma/enums";
-import { Prisma } from "../../../../generated/prisma/client";
-import config from "../../config";
-import { prisma } from "../../lib/prisma";
-import { AppError } from "../../utils/AppError";
-import { recordAuditLog } from "../../utils/auditLog";
-import { buildMeta, parseQuery } from "../../utils/pagination";
-import type { IQuery } from "../../interfaces";
+} from "../../../../generated/prisma/enums.js";
+import { Prisma } from "../../../../generated/prisma/client.js";
+import config from "../../config/index.js";
+import { prisma } from "../../lib/prisma.js";
+import { AppError } from "../../utils/AppError.js";
+import { recordAuditLog } from "../../utils/auditLog.js";
+import { buildMeta, parseQuery } from "../../utils/pagination.js";
+import type { IQuery } from "../../interfaces/index.js";
 import type {
   ICreateAdminPayload,
   ICreateFacultyPayload,
   IUpdateUserStatusPayload,
-} from "./admin.interface";
+} from "./admin.interface.js";
 
 /** Placeholder generator — swap for a real faculty-id scheme. */
 const generateFacultyId = (department: string) =>

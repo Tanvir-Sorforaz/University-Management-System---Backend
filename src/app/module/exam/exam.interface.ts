@@ -1,4 +1,4 @@
-import type { ExamType } from "../../../../generated/prisma/enums";
+import type { ExamType } from "../../../../generated/prisma/enums.js";
 
 export interface ICreateExamPayload {
   semesterId: string;

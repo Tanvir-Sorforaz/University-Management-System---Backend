@@ -1,17 +1,17 @@
 import bcrypt from "bcryptjs";
 import httpStatus from "http-status";
 import type { JwtPayload, SignOptions } from "jsonwebtoken";
-import { Role } from "../../../../generated/prisma/enums";
-import config from "../../config";
-import { AppError } from "../../utils/AppError";
-import { jwtUtils } from "../../utils/jwt";
-import type { ILoginPayload, IRegisterStudentPayload, IverifyEmailPayload } from "./auth.interface";
-import { Prisma } from "../../../../generated/prisma/client";
-import { prisma } from "../../lib/prisma"; //capital prisma is the generated client, lowercase prisma is the instance of the client
-import { redisClient } from "../../lib/redis";
+import { Role } from "../../../../generated/prisma/enums.js";
+import config from "../../config/index.js";
+import { AppError } from "../../utils/AppError.js";
+import { jwtUtils } from "../../utils/jwt.js";
+import type { ILoginPayload, IRegisterStudentPayload, IverifyEmailPayload } from "./auth.interface.js";
+import { Prisma } from "../../../../generated/prisma/client.js";
+import { prisma } from "../../lib/prisma.js"; //capital prisma is the generated client, lowercase prisma is the instance of the client
+import { redisClient } from "../../lib/redis.js";
 import ejs from "ejs";
 import path from "path";
-import { transporter } from "../../lib/nodemailer";
+import { transporter } from "../../lib/nodemailer.js";
 import crypto from "node:crypto";
 
 

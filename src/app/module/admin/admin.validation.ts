@@ -1,5 +1,5 @@
 import z from "zod";
-import { AdminType, Department } from "../../../../generated/prisma/enums";
+import { AdminType, Department } from "../../../../generated/prisma/enums.js";
 
 const passwordSchema = z
   .string()

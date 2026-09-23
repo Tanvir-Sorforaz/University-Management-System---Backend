@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
-import { AdminType, Department, Role } from "../../../generated/prisma/enums";
-import config from "../config";
-import { prisma } from "../lib/prisma";
+import { AdminType, Department, Role } from "../../../generated/prisma/enums.js";
+import config from "../config/index.js";
+import { prisma } from "../lib/prisma.js";
 
 const DEPARTMENTS = [Department.CSE, Department.EEE, Department.CIVIL];
 const TOTAL_SEMESTERS = 8;

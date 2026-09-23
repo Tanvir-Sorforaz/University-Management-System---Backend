@@ -1,10 +1,10 @@
 import type { Request, Response } from "express";
 import httpStatus from "http-status";
-import { AppError } from "../../utils/AppError";
-import { catchAsync } from "../../utils/catchAsync";
-import { sendResponse } from "../../utils/sendResponse";
-import config from "../../config";
-import { AuthService } from "./auth.service";
+import { AppError } from "../../utils/AppError.js";
+import { catchAsync } from "../../utils/catchAsync.js";
+import { sendResponse } from "../../utils/sendResponse.js";
+import config from "../../config/index.js";
+import { AuthService } from "./auth.service.js";
 
 const ACCESS_TOKEN_MAX_AGE = 1000 * 60 * 60 * 24; // 1 day
 const REFRESH_TOKEN_MAX_AGE = 1000 * 60 * 60 * 24 * 7; // 7 days

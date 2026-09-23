@@ -1,4 +1,4 @@
-import type { Department, Role } from "../../../../generated/prisma/enums";
+import type { Department, Role } from "../../../../generated/prisma/enums.js";
 
 /**
  * Public self-registration only ever creates a STUDENT account.

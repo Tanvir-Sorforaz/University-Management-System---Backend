@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { Role } from "../../../../generated/prisma/enums";
-import { auth } from "../../middleware/checkAuth";
-import { validateRequest } from "../../middleware/validateRequest";
-import { ExamController } from "./exam.controller";
-import { ExamValidation } from "./exam.validation";
+import { Role } from "../../../../generated/prisma/enums.js";
+import { auth } from "../../middleware/checkAuth.js";
+import { validateRequest } from "../../middleware/validateRequest.js";
+import { ExamController } from "./exam.controller.js";
+import { ExamValidation } from "./exam.validation.js";
 
 const router = Router();
 

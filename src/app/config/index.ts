@@ -33,9 +33,12 @@ export default {
   cloudinary_api_key: process.env.CLOUDINARY_API_KEY!,
   cloudinary_api_secret: process.env.CLOUDINARY_API_SECRET!,
 
-  sslcommerz_store_id: process.env.SSLCOMMERZ_STORE_ID!,
-  sslcommerz_store_password: process.env.SSLCOMMERZ_STORE_PASSWORD!,
-  sslcommerz_is_live: process.env.SSLCOMMERZ_IS_LIVE === "true",
+  bkash_base_url: process.env.BKASH_BASE_URL!,
+  bkash_username: process.env.BKASH_USERNAME!,
+  bkash_password: process.env.BKASH_PASSWORD!,
+  bkash_app_key: process.env.BKASH_APP_KEY!,
+  bkash_app_secret: process.env.BKASH_APP_SECRET!,
+  bkash_callback_url: process.env.BKASH_CALLBACK_URL!,
 
   rate_limit_window_ms: process.env.RATE_LIMIT_WINDOW_MS,
   rate_limit_max: process.env.RATE_LIMIT_MAX,

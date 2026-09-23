@@ -1,9 +1,10 @@
 import type { Request, Response } from "express";
 import httpStatus from "http-status";
-import { AppError } from "../../utils/AppError";
-import { catchAsync } from "../../utils/catchAsync";
-import { sendResponse } from "../../utils/sendResponse";
-import { ResultService } from "./result.service";
+import { AppError } from "../../utils/AppError.js";
+import { catchAsync } from "../../utils/catchAsync.js";
+import { getRequiredParam } from "../../utils/getRequiredParam.js";
+import { sendResponse } from "../../utils/sendResponse.js";
+import { ResultService } from "./result.service.js";
 
 const createResult = catchAsync(async (req: Request, res: Response) => {
   if (!req.user) {
@@ -40,7 +41,8 @@ const updateResult = catchAsync(async (req: Request, res: Response) => {
     throw new AppError(httpStatus.UNAUTHORIZED, "User information is missing in the request");
   }
 
-  const result = await ResultService.updateResult(req.params.id, req.body, req.user);
+  const id = getRequiredParam(req.params, "id");
+  const result = await ResultService.updateResult(id, req.body, req.user);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

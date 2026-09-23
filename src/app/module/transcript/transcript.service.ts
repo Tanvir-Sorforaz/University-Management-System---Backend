@@ -1,7 +1,7 @@
 import httpStatus from "http-status";
-import { prisma } from "../../lib/prisma";
-import { AppError } from "../../utils/AppError";
-import { calculateCgpa, calculateSemesterGrade } from "../../utils/grade";
+import { prisma } from "../../lib/prisma.js";
+import { AppError } from "../../utils/AppError.js";
+import { calculateCgpa, calculateSemesterGrade } from "../../utils/grade.js";
 
 /**
  * Recalculates a student's CGPA from every Semester they have at least one

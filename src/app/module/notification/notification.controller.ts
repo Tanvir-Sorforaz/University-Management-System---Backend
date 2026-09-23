@@ -1,9 +1,10 @@
 import type { Request, Response } from "express";
 import httpStatus from "http-status";
-import { AppError } from "../../utils/AppError";
-import { catchAsync } from "../../utils/catchAsync";
-import { sendResponse } from "../../utils/sendResponse";
-import { NotificationService } from "./notification.service";
+import { AppError } from "../../utils/AppError.js";
+import { catchAsync } from "../../utils/catchAsync.js";
+import { getRequiredParam } from "../../utils/getRequiredParam.js";
+import { sendResponse } from "../../utils/sendResponse.js";
+import { NotificationService } from "./notification.service.js";
 
 const getMyNotifications = catchAsync(async (req: Request, res: Response) => {
   if (!req.user) {
@@ -29,7 +30,8 @@ const markAsRead = catchAsync(async (req: Request, res: Response) => {
     throw new AppError(httpStatus.UNAUTHORIZED, "User information is missing in the request");
   }
 
-  const result = await NotificationService.markAsRead(req.params.id, req.user.userId);
+  const id = getRequiredParam(req.params, "id");
+  const result = await NotificationService.markAsRead(id, req.user.userId);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

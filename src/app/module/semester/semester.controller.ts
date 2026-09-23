@@ -1,8 +1,9 @@
 import type { Request, Response } from "express";
 import httpStatus from "http-status";
-import { catchAsync } from "../../utils/catchAsync";
-import { sendResponse } from "../../utils/sendResponse";
-import { SemesterService } from "./semester.service";
+import { catchAsync } from "../../utils/catchAsync.js";
+import { getRequiredParam } from "../../utils/getRequiredParam.js";
+import { sendResponse } from "../../utils/sendResponse.js";
+import { SemesterService } from "./semester.service.js";
 
 const getAllSemesters = catchAsync(async (req: Request, res: Response) => {
   const { semesters, meta } = await SemesterService.getAllSemesters(req.query);
@@ -17,7 +18,8 @@ const getAllSemesters = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getSemesterById = catchAsync(async (req: Request, res: Response) => {
-  const result = await SemesterService.getSemesterById(req.params.id);
+  const id = getRequiredParam(req.params, "id");
+  const result = await SemesterService.getSemesterById(id);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -28,7 +30,8 @@ const getSemesterById = catchAsync(async (req: Request, res: Response) => {
 });
 
 const updateSemester = catchAsync(async (req: Request, res: Response) => {
-  const result = await SemesterService.updateSemester(req.params.id, req.body);
+  const id = getRequiredParam(req.params, "id");
+  const result = await SemesterService.updateSemester(id, req.body);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

@@ -1,5 +1,5 @@
 import httpStatus from "http-status";
-import { AppError } from "./AppError";
+import { AppError } from "./AppError.js";
 
 
 export const getRequiredParam = (

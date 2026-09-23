@@ -1,10 +1,10 @@
 import type { Request, Response } from "express";
 import httpStatus from "http-status";
-import { AppError } from "../../utils/AppError";
-import { catchAsync } from "../../utils/catchAsync";
-import { getRequiredParam } from "../../utils/getRequiredParam";
-import { sendResponse } from "../../utils/sendResponse";
-import { AdminService } from "./admin.service";
+import { AppError } from "../../utils/AppError.js";
+import { catchAsync } from "../../utils/catchAsync.js";
+import { getRequiredParam } from "../../utils/getRequiredParam.js";
+import { sendResponse } from "../../utils/sendResponse.js";
+import { AdminService } from "./admin.service.js";
 
 const createFaculty = catchAsync(async (req: Request, res: Response) => {
   if (!req.user) {

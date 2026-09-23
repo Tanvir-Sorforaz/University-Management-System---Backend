@@ -1,7 +1,7 @@
 import httpStatus from "http-status";
-import { prisma } from "../../lib/prisma";
-import { AppError } from "../../utils/AppError";
-import type { ICreateExamPayload, IUpdateExamPayload } from "./exam.interface";
+import { prisma } from "../../lib/prisma.js";
+import { AppError } from "../../utils/AppError.js";
+import type { ICreateExamPayload, IUpdateExamPayload } from "./exam.interface.js";
 
 const createExam = async (payload: ICreateExamPayload, actor: { userId: string }) => {
   const facultyProfile = await prisma.facultyProfile.findUnique({

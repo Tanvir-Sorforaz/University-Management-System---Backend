@@ -1,9 +1,10 @@
 import type { Request, Response } from "express";
 import httpStatus from "http-status";
-import { AppError } from "../../utils/AppError";
-import { catchAsync } from "../../utils/catchAsync";
-import { sendResponse } from "../../utils/sendResponse";
-import { ExamService } from "./exam.service";
+import { AppError } from "../../utils/AppError.js";
+import { catchAsync } from "../../utils/catchAsync.js";
+import { getRequiredParam } from "../../utils/getRequiredParam.js";
+import { sendResponse } from "../../utils/sendResponse.js";
+import { ExamService } from "./exam.service.js";
 
 const createExam = catchAsync(async (req: Request, res: Response) => {
   if (!req.user) {
@@ -21,7 +22,8 @@ const createExam = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getExamById = catchAsync(async (req: Request, res: Response) => {
-  const result = await ExamService.getExamById(req.params.id);
+  const id = getRequiredParam(req.params, "id");
+  const result = await ExamService.getExamById(id);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -32,7 +34,8 @@ const getExamById = catchAsync(async (req: Request, res: Response) => {
 });
 
 const updateExam = catchAsync(async (req: Request, res: Response) => {
-  const result = await ExamService.updateExam(req.params.id, req.body);
+  const id = getRequiredParam(req.params, "id");
+  const result = await ExamService.updateExam(id, req.body);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -43,7 +46,8 @@ const updateExam = catchAsync(async (req: Request, res: Response) => {
 });
 
 const deleteExam = catchAsync(async (req: Request, res: Response) => {
-  const result = await ExamService.deleteExam(req.params.id);
+  const id = getRequiredParam(req.params, "id");
+  const result = await ExamService.deleteExam(id);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

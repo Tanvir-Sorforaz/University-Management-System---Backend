@@ -1,4 +1,4 @@
-import type { IQuery } from "../interfaces";
+import type { IQuery } from "../interfaces/index.js";
 
 const DEFAULT_PAGE = 1;
 const DEFAULT_LIMIT = 10;

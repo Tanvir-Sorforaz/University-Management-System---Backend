@@ -1,5 +1,5 @@
 import z from "zod";
-import { ExamType } from "../../../../generated/prisma/enums";
+import { ExamType } from "../../../../generated/prisma/enums.js";
 
 const CreateExamZodSchema = z.object({
   semesterId: z.string().min(1, "semesterId is required"),
