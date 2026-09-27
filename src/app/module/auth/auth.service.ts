@@ -11,9 +11,9 @@ import { prisma } from "../../lib/prisma.js"; //capital prisma is the generated 
 import { redisClient } from "../../lib/redis.js";
 import ejs from "ejs";
 import path from "path";
-// import { transporter } from "../../lib/nodemailer.js";
+import { transporter } from "../../lib/nodemailer.js";
 import crypto from "node:crypto";
-import { resend } from "../../lib/resend.js";
+
 
 
 /** Placeholder generator — swap for a real roll-number scheme. */
@@ -103,28 +103,12 @@ const registerStudent = async (payload: IRegisterStudentPayload) => {
 
   });
 
-  // await transporter.sendMail({
-  //   from: config.email_sender,
-  //   to: email,
-  //   subject: "Verify your email — University Management System",
-  //   html,
-  // });
-  const { data, error } = await resend.emails.send({
-    from: config.email_sender, // e.g., "Your App <onboarding@yourdomain.com>"
+  await transporter.sendMail({
+    from: config.email_sender,
     to: email,
     subject: "Verify your email — University Management System",
-    html: html,
+    html,
   });
-
-  if (error) {
-    // It's important to handle the error from Resend
-    console.error("Failed to send verification email:", error);
-    throw new AppError(
-      httpStatus.INTERNAL_SERVER_ERROR,
-      "Could not send verification email. Please try again."
-    );
-  }
-
 
 };
 
@@ -190,22 +174,12 @@ const verifyStudentEmail=async(payload:IverifyEmailPayload)=>{
   const templatePath = path.join(process.cwd(), "src/app/templates/welcome-email.ejs");
   const html = await ejs.renderFile(templatePath, { name: user.name });
 
-  // await transporter.sendMail({
-  //   from: config.email_sender,
-  //   to: email,
-  //   subject: "Welcome to the University Management System",
-  //   html,
-  // });
-
-  const { data, error } = await resend.emails.send({
+  await transporter.sendMail({
     from: config.email_sender,
     to: email,
     subject: "Welcome to the University Management System",
-    html: html,
+    html,
   });
-  if (error) {
-    console.error("Failed to send welcome email:", error);
-  }
 
   const jwtPayload = { userId: user.id,email: user.email, name: user.name, role: user.role };
   const { accessToken, refreshToken } = issueTokens(jwtPayload);
